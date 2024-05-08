@@ -13,7 +13,7 @@ import (
 
 var (
 	db      *sql.DB
-	dbMutex sync.Mutex // Mutex for protecting access to the database
+	dbMutex sync.Mutex
 )
 
 type Employee struct {
@@ -47,7 +47,6 @@ func main() {
 	r := gin.Default()
 	InitDB()
 
-	// CRUD endpoints
 	r.POST("/employees", func(c *gin.Context) {
 		var emp Employee
 		if err := c.BindJSON(&emp); err != nil {
@@ -131,7 +130,6 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"message": "Employee deleted successfully"})
 	})
 
-	// Start the Gin server
 	if err := r.Run(":8080"); err != nil {
 		fmt.Println("Failed to start server:", err)
 	}
